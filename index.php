@@ -8,18 +8,17 @@
         die;
     }else{
         $con = create_connection();
+        $user_id = $_SESSION["user_id"];
 
 
         // post request
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            $user_id = $_SESSION["user_id"];
+        if($_SERVER['REQUEST_METHOD'] == "POST"){     
             $todo = $_POST["todo"];
-            $user_id = $_SESSION['user_id'];
             $query = "insert into todo (todo, user_id) values ('$todo','$user_id')";
             mysqli_query($con, $query);
         }
 
-        $query2 = "select * from todo";
+        $query2 = "select * from todo where user_id = '$user_id'";
         $result = mysqli_query($con, $query2);
         $todos = mysqli_fetch_all($result) ?? [];
     }
